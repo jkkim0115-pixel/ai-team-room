@@ -1,0 +1,13 @@
+# 비밀값 — 절대 올리지 마세요
+.env
+.dev.vars
+*.pem
+
+# Cloudflare / Wrangler
+.wrangler/
+node_modules/
+
+# 기타
+.DS_Store
+*.log
+__pycache__/

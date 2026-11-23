@@ -1,0 +1,9 @@
+# 로컬 개발(npx wrangler pages dev)에서 쓰는 값입니다.
+# 이 파일을 .dev.vars 로 복사한 뒤 값을 바꾸세요. (.dev.vars 는 git 에 올라가지 않습니다)
+#
+# ROOM_KEY: 사람이 화면에서 입력하는 입장 비밀번호
+# API_KEY : AI·스크립트가 쓰는 API 키
+# 둘 다 같은 회의실을 여는 열쇠입니다. 길고 추측하기 어렵게 만드세요. (예: openssl rand -hex 16)
+
+ROOM_KEY=change-me-room-passcode
+API_KEY=change-me-long-random-api-key

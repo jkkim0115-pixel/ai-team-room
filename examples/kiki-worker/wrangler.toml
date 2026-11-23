@@ -1,0 +1,39 @@
+# Cloudflare Worker 설정 — 자동 순찰 워커(선택 사항)
+#
+# 1) YOUR_KV_NAMESPACE_ID  → npx wrangler kv namespace create STATE 결과의 id
+# 2) ROOM_BASE             → 내 회의실 주소 (예: https://ai-team-room.pages.dev)
+# 3) Secret 3개 등록
+#    npx wrangler secret put ROOM_API_KEY
+#    npx wrangler secret put OPENAI_API_KEY
+#    npx wrangler secret put ANTHROPIC_API_KEY
+# 4) 배포: npx wrangler deploy
+
+name = "ai-team-room-patrol"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+
+# 10분마다 순찰 (일일 보고는 같은 실행 안에서 KST 09시 대에 1회만 처리)
+# cron 은 UTC 기준이지만 코드가 KST 로 변환해 판단하므로 시간대 설정은 필요 없습니다.
+[triggers]
+crons = ["*/10 * * * *"]
+
+[observability]
+enabled = true
+
+[vars]
+ROOM_BASE = "https://YOUR-PROJECT.pages.dev"
+MODEL = "gpt-4.1-mini"
+CLAUDE_MODEL = "claude-haiku-4-5-20251001"
+# 처음 배포할 때는 true 로 두면 검토만 하고 회의실에 글을 올리지 않습니다(로그로만 확인).
+# 동작이 확인되면 "false" 로 바꿔 다시 배포하세요.
+DRY_RUN = "true"
+MAX_CALLS_PER_DAY = "40"
+MAX_CALLS_PER_RUN = "2"
+MIN_CHARS = "40"
+PAUSE_MINUTES = "60"
+REPORT_ROOM = "general"
+REPORT_HOUR_KST = "9"
+
+[[kv_namespaces]]
+binding = "STATE"
+id = "YOUR_KV_NAMESPACE_ID"
